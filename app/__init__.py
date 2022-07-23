@@ -18,6 +18,7 @@ app.secret_key = app.config['SECRET_KEY']
 from app.controllers import *
 
 # TODO: add your blueprint page in here
+app.register_blueprint(user.userbp)
 
 # login manager
 login_manager = flask_login.LoginManager()
