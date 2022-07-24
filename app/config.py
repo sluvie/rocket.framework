@@ -30,18 +30,12 @@ MAIL_ACCOUNT = [
 # Configuration of a Database account
 DATABASE_ACCOUNT = {
         "mpmds": {
-            "SERVER": "10.10.101.96",
+            "DRIVER": "{ODBC Driver 18 for SQL Server}",
+            "SERVER": "51.79.206.3",
             "PORT": 1443,
-            "user": "appreader",
-            "password": "Simpang4244",
-            "database": "MPMDS",
-        },
-        "mpmit": {
-            "SERVER": "10.10.101.96",
-            "PORT": 1443,
-            "user": "appreader",
-            "password": "Simpang4244",
-            "database": "MPMIT",
+            "user": "sa",
+            "password": "P@ssw0rd1",
+            "database": "rocket",
         },
     }
 

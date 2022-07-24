@@ -45,17 +45,18 @@ def signin():
 
     # initialize sample input
     if request.method=="GET":
-        form.userid.data = "05660"
+        form.userid.data = ""
 
     # form submit
     if request.method=="POST" and form.validate():
-        apiOrange = Orange.OrangeAPI()
-        isValid = apiOrange.user_validation(form.userid.data, form.password.data)
+        # TODO: check at database for username and password
+        isValid = True
         if isValid:
             # process the login manager session
             user = USession.User()
             # TODO: place your user / account data
             user.npk = form.userid.data
+
             user_data = User()
             person, message = user_data.profile(user.npk)
             user.name = person['name']

@@ -1,4 +1,4 @@
-import pymssql
+import pyodbc
 import app.config as conf
 
 class BaseModel():
@@ -8,12 +8,15 @@ class BaseModel():
 
     def __init__(self):
         config = conf.DATABASE_ACCOUNT[self.__database__]
-        self.__connection__ = pymssql.connect(
-                server=config["SERVER"],
-                database=config["database"],
-                user=config["user"],
-                password=config["password"]
+        self.__connection__ = pyodbc.connect(
+                'Driver=%s;' % (config["DRIVER"]) + \
+                'Server=%s;' % (config["SERVER"]) + \
+                'Database=%s;' % (config["database"]) + \
+                'UID=%s;' % (config["user"]) + \
+                'PWD=%s;' % (config["password"]) + \
+                'TrustServerCertificate=yes;'
             )
+
 
     def callproc(self, query, parameters):
         try:
@@ -21,7 +24,7 @@ class BaseModel():
             cursor.execute(query, parameters)
             rows = cursor.fetchall()
             return (rows, "")
-        except pymssql.Error as e:
+        except pyodbc.Error as e:
             print(str(e))
             return (None, str(e))
 
@@ -32,7 +35,7 @@ class BaseModel():
             cursor.execute(query, parameters)
             rows = cursor.fetchall()
             return (rows, "")
-        except pymssql.Error as e:
+        except pyodbc.Error as e:
             print(str(e))
             return (None, str(e))
 
@@ -55,7 +58,7 @@ class BaseTable(BaseModel):
                 return ("", "Failed to get new id")
             else:
                 return(row[0], "")
-        except pymssql.Error as e:
+        except pyodbc.Error as e:
             print(str(e))
             return ("", str(e))
 
@@ -66,7 +69,7 @@ class BaseTable(BaseModel):
             cursor.execute(query, ())
             rows = cursor.fetchall()
             return (rows, "")
-        except pymssql.Error as e:
+        except pyodbc.Error as e:
             print(str(e))
             return (None, str(e))
 
@@ -78,7 +81,7 @@ class BaseTable(BaseModel):
             cursor.execute(query, (key, ))
             rows = cursor.fetchone()
             return (rows, "")
-        except pymssql.Error as e:
+        except pyodbc.Error as e:
             print(str(e))
             return (None, str(e))
 
@@ -105,7 +108,7 @@ class BaseTable(BaseModel):
 
             self.__connection__.commit()
             return (True, "")
-        except pymssql.Error as e:
+        except pyodbc.Error as e:
             self.__connection__.rollback()
             print(str(e))
             return (False, str(e))
@@ -132,7 +135,7 @@ class BaseTable(BaseModel):
 
             self.__connection__.commit()
             return (True, "")
-        except pymssql.Error as e:
+        except pyodbc.Error as e:
             self.__connection__.rollback()
             print(str(e))
             return (False, str(e))
@@ -146,7 +149,7 @@ class BaseTable(BaseModel):
             self.__connection__.commit()
 
             return (True, "")
-        except pymssql.Error as e:
+        except pyodbc.Error as e:
             self.__connection__.rollback()
             print(str(e))
             return (False, str(e))
@@ -160,7 +163,7 @@ class BaseTable(BaseModel):
             self.__connection__.commit()
 
             return (True, "")
-        except pymssql.Error as e:
+        except pyodbc.Error as e:
             self.__connection__.rollback()
             print(str(e))
             return (False, str(e))

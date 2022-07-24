@@ -1,0 +1,1 @@
+source rocket_framework/bin/activate

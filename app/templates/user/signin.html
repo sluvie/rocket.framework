@@ -15,7 +15,7 @@
 				<span class="text-danger">use the password : demodemo</span>
 
 				<form class="form" action="{{ url_for('userbp.signin') }}" method="post">
-					{{ m.render_field(form.email, class='form-control') }}
+					{{ m.render_field(form.userid, class='form-control') }}
 					{{ m.render_field(form.password, class='form-control') }}
 					{{ form.csrf_token }}
 					<button class="btn btn-large btn-block btn-primary form-control mt-3" type="submit">Sign In</button>
